@@ -20,7 +20,11 @@
 #include "lidarData.hpp"
 #include "camFusion.hpp"
 
+// This include is required to plot ttc vs frames using matplot libraries //
+//#include "matplotlibcpp.h"
+
 using namespace std;
+
 
 /* MAIN PROGRAM */
 int main(int argc, const char *argv[])
@@ -35,8 +39,8 @@ int main(int argc, const char *argv[])
     string imgPrefix = "KITTI/2011_09_26/image_02/data/000000"; // left camera, color
     string imgFileType = ".png";
     int imgStartIndex = 0; // first file index to load (assumes Lidar and camera names have identical naming convention)
-    int imgEndIndex = 18;   // last file index to load
-    int imgStepWidth = 1; 
+    int imgEndIndex = 30;   // last file index to load
+    int imgStepWidth = 2;
     int imgFillWidth = 4;  // no. of digits which make up the file index (e.g. img-0001.png)
 
     // object detection
@@ -74,8 +78,20 @@ int main(int argc, const char *argv[])
     vector<DataFrame> dataBuffer; // list of data frames which are held in memory at the same time
     bool bVis = false;            // visualize results, only set true for a step which we want to visualize...
 
-    /* MAIN LOOP OVER ALL IMAGES */
+    // --------------------------------- This section contains student data for plotting graphs using Matplotlib --------------------------------- //
+    /*
+    vector<double> ttc_for_Lidar;
+    vector<double> ttc_for_Camera;
+    vector<int> frameNumber;
+    int frameNum = 1;
+    */
 
+    // ---------------------------------------------- End of dataplot variable definition section ------------------------------------------------ //
+
+    string detectorType = "SHITOMASI";  // SHITOMASI, HARRIS, FAST, BRISK, ORB, AKAZE
+    string descriptorType = "BRISK"; // BRISK, BRIEF, ORB, FREAK, AKAZE
+    
+    /* MAIN LOOP OVER ALL IMAGES */
     for (size_t imgIndex = 0; imgIndex <= imgEndIndex - imgStartIndex; imgIndex+=imgStepWidth)
     {
         /* LOAD IMAGE INTO BUFFER */
@@ -93,7 +109,7 @@ int main(int argc, const char *argv[])
         frame.cameraImg = img;
         dataBuffer.push_back(frame);
 
-        cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
+        //cout << "#1 : LOAD IMAGE INTO BUFFER done" << endl;
 
 
         /* DETECT & CLASSIFY OBJECTS */
@@ -104,7 +120,7 @@ int main(int argc, const char *argv[])
         detectObjects((dataBuffer.end() - 1)->cameraImg, (dataBuffer.end() - 1)->boundingBoxes, confThreshold, nmsThreshold,
                       yoloBasePath, yoloClassesFile, yoloModelConfiguration, yoloModelWeights, bVis);
 
-        cout << "#2 : DETECT & CLASSIFY OBJECTS done" << endl;
+        //cout << "#2 : DETECT & CLASSIFY OBJECTS done" << endl;
 
 
         /* CROP LIDAR POINTS */
@@ -120,7 +136,7 @@ int main(int argc, const char *argv[])
     
         (dataBuffer.end() - 1)->lidarPoints = lidarPoints;
 
-        cout << "#3 : CROP LIDAR POINTS done" << endl;
+        //cout << "#3 : CROP LIDAR POINTS done" << endl;
 
 
         /* CLUSTER LIDAR POINT CLOUD */
@@ -130,18 +146,18 @@ int main(int argc, const char *argv[])
         clusterLidarWithROI((dataBuffer.end()-1)->boundingBoxes, (dataBuffer.end() - 1)->lidarPoints, shrinkFactor, P_rect_00, R_rect_00, RT);
 
         // Visualize 3D objects
-        bVis = true;
+        bVis = false;
         if(bVis)
         {
             show3DObjects((dataBuffer.end()-1)->boundingBoxes, cv::Size(4.0, 20.0), cv::Size(2000, 2000), true);
         }
         bVis = false;
 
-        cout << "#4 : CLUSTER LIDAR POINT CLOUD done" << endl;
+        //cout << "#4 : CLUSTER LIDAR POINT CLOUD done" << endl;
         
         
         // REMOVE THIS LINE BEFORE PROCEEDING WITH THE FINAL PROJECT
-        continue; // skips directly to the next image without processing what comes beneath
+        // continue; // skips directly to the next image without processing what comes beneath
 
         /* DETECT IMAGE KEYPOINTS */
 
@@ -150,15 +166,14 @@ int main(int argc, const char *argv[])
         cv::cvtColor((dataBuffer.end()-1)->cameraImg, imgGray, cv::COLOR_BGR2GRAY);
 
         // extract 2D keypoints from current image
-        vector<cv::KeyPoint> keypoints; // create empty feature list for current image
-        string detectorType = "SHITOMASI";
+        vector<cv::KeyPoint> keypoints; // create empty feature list for current image        
 
         if (detectorType.compare("SHITOMASI") == 0)
         {
             detKeypointsShiTomasi(keypoints, imgGray, false);
         }
         // implemented other detectors //
-		// Gaurav Borgaonkar keypoint detectors included /
+		// Gaurav Borgaonkar keypoint detectors included
 		else if (detectorType.compare("HARRIS") == 0)
         {
             detKeypointsHarris(keypoints, imgGray, false);
@@ -185,19 +200,19 @@ int main(int argc, const char *argv[])
         // push keypoints and descriptor for current frame to end of data buffer
         (dataBuffer.end() - 1)->keypoints = keypoints;
 
-        cout << "#5 : DETECT KEYPOINTS done" << endl;
+        //cout << "#5 : DETECT KEYPOINTS done" << endl;
 
 
         /* EXTRACT KEYPOINT DESCRIPTORS */
 
         cv::Mat descriptors;
-        string descriptorType = "BRISK"; // BRISK, BRIEF, ORB, FREAK, AKAZE, SIFT
+        
         descKeypoints((dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->cameraImg, descriptors, descriptorType);
 
         // push descriptors for current frame to end of data buffer
         (dataBuffer.end() - 1)->descriptors = descriptors;
 
-        cout << "#6 : EXTRACT DESCRIPTORS done" << endl;
+        //cout << "#6 : EXTRACT DESCRIPTORS done" << endl;
 
 
         if (dataBuffer.size() > 1) // wait until at least two images have been processed
@@ -207,8 +222,8 @@ int main(int argc, const char *argv[])
 
             vector<cv::DMatch> matches;
             string matcherType = "MAT_BF";        // MAT_BF, MAT_FLANN
-            string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
-            string selectorType = "SEL_NN";       // SEL_NN, SEL_KNN
+            //string descriptorType = "DES_BINARY"; // DES_BINARY, DES_HOG
+            string selectorType = "SEL_KNN";       // SEL_NN, SEL_KNN
 
             matchDescriptors((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints,
                              (dataBuffer.end() - 2)->descriptors, (dataBuffer.end() - 1)->descriptors,
@@ -217,7 +232,7 @@ int main(int argc, const char *argv[])
             // store matches in current data frame
             (dataBuffer.end() - 1)->kptMatches = matches;
 
-            cout << "#7 : MATCH KEYPOINT DESCRIPTORS done" << endl;
+            //cout << "#7 : MATCH KEYPOINT DESCRIPTORS done" << endl;
 
             
             /* TRACK 3D OBJECT BOUNDING BOXES */
@@ -231,7 +246,7 @@ int main(int argc, const char *argv[])
             // store matches in current data frame
             (dataBuffer.end()-1)->bbMatches = bbBestMatches;
 
-            cout << "#8 : TRACK 3D OBJECT BOUNDING BOXES done" << endl;
+            //cout << "#8 : TRACK 3D OBJECT BOUNDING BOXES done" << endl;
 
             // Till this point, we have a set of 3D objects in space (one for each timestep) and whole set of keypoint mmatches between images all over the image...
             /* COMPUTE TTC ON OBJECT IN FRONT */
@@ -258,14 +273,16 @@ int main(int argc, const char *argv[])
                     }
                 }
 
-                //We check if both bounding boxes have associated lidar points //
-                // compute TTC for current match
+                // We check if both bounding boxes have associated lidar points //
+                // compute TTC for current match                
+                
                 if( currBB->lidarPoints.size()>0 && prevBB->lidarPoints.size()>0 ) // only compute TTC if we have Lidar points
                 {
                     //// STUDENT ASSIGNMENT
                     //// TASK FP.2 -> compute time-to-collision based on Lidar data (implement -> computeTTCLidar)
                     double ttcLidar; 
                     computeTTCLidar(prevBB->lidarPoints, currBB->lidarPoints, sensorFrameRate, ttcLidar);
+
                     //// EOF STUDENT ASSIGNMENT
 
                     //// STUDENT ASSIGNMENT
@@ -275,8 +292,19 @@ int main(int argc, const char *argv[])
                     clusterKptMatchesWithROI(*currBB, (dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints, (dataBuffer.end() - 1)->kptMatches);                    
                     computeTTCCamera((dataBuffer.end() - 2)->keypoints, (dataBuffer.end() - 1)->keypoints, currBB->kptMatches, sensorFrameRate, ttcCamera);
                     //// EOF STUDENT ASSIGNMENT
+                    
+                    /*
+                    // --------------------------------- Variables required for plotting graphs using Matplotlib --------------------------------- //
+                    
+                    ttc_for_Lidar.push_back(ttcLidar);
+                    ttc_for_Camera.push_back(ttcCamera);
+                    frameNumber.push_back(frameNum);
 
-                    bVis = true;
+                    frameNum++;
+                    // ------------------------------ End of Variables required for plotting graphs using Matplotlib ----------------------------- //
+                    */
+
+                    bVis = false;
                     if (bVis)
                     {
                         cv::Mat visImg = (dataBuffer.end() - 1)->cameraImg.clone();
@@ -290,10 +318,12 @@ int main(int argc, const char *argv[])
                         string windowName = "Final Results : TTC";
                         cv::namedWindow(windowName, 4);
                         cv::imshow(windowName, visImg);
-                        cout << "Press key to continue to next frame" << endl;
-                        cv::waitKey(0);
+                        //cout << "Press key to continue to next frame" << endl;
+                        //cv::waitKey(0);
                     }
                     bVis = false;
+
+                    // Plot line from given x and y data. Color is selected automatically.
 
                 } // eof TTC computation
             } // eof loop over all BB matches            
@@ -302,5 +332,34 @@ int main(int argc, const char *argv[])
 
     } // eof loop over all images
 
+    /*
+    // From now, next section contains student code for plotting images for performance evaluation with the help of MATPLOTLIB libraries //
+    bool plot_graph = true;
+
+    if (plot_graph)
+    {
+
+        matplotlibcpp::figure_size(1200, 800);
+
+        matplotlibcpp::plot(frameNumber, ttc_for_Lidar, "o-");
+        matplotlibcpp::legend();
+        matplotlibcpp::plot(frameNumber, ttc_for_Camera, "o-");
+        matplotlibcpp::legend();
+
+        // Set x-axis and y-axis values
+        //matplotlibcpp::xlim(0, 20);
+        matplotlibcpp::ylim(0, 20);
+
+        // Add graph title and XY axes titles
+        matplotlibcpp::title("TTC vs Frame ("+detectorType+" + "+descriptorType+")");
+        matplotlibcpp::xlabel("Frame Number");
+        matplotlibcpp::ylabel("TTC (seconds)");
+
+        //matplotlibcpp::show();
+        matplotlibcpp::save("/home/gaurav/Desktop/sensor_fusion/SFND_3D_Object_Tracking/plots/"+detectorType+" + "+descriptorType+"_30frames.png");
+
+    }
+    */
+    
     return 0;
 }
