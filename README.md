@@ -113,6 +113,22 @@ Here we find examples where the TTC estimate of the Lidar sensor does not seem p
 |34|	**-30622.7**|	-8.83|
 |35|	53.40	|**-inf**    |
 
-We start noticing that around frame 25 (image frame = 25*2 = 50), the values of Lidar TTC estimate seem very erroneous. It took me some time to understand why this was happening, but on closer look at the images, it looks like both the preceding vehicle and our ego vehicle are stopped. Hence, d0 and d1 become the same. Hence, the TTC goes to infinity. We also notice a value around frame 18, which may be because of some noise.
+We start noticing that around frame 25 (image frame = 25*2 = 50), the values of Lidar TTC estimate seem very erroneous. It took me some time to understand why this was happening, but on closer look at the images, it looks like both the preceding vehicle and our ego vehicle are stopped. Hence, d0 and d1 become the same. Hence, the TTC goes to infinity. We also notice a erroneous value around frame 18, which may be because of some noise.
 
+2. I ran the tests again, this time with MAT_FLANN matcher and only on the first 30 frames with
+stepwidth of 1.
+We see that the
+LIDAR TTC estimate is not consistent and seems to increase somewhat between few
+frames which suggests that there is still so me noise in the measurements. This noise maybe due to
+some erroneous measurements, the reasons for which could be any of the following
+ uneven road surface with bumps/potholes
+ improper calibration or mounting of LIDAR sensors
+ maybe the LIDAR and camera are not perfectly synced together
+ some reflections of LIDAR from unwanted objects like road/dust particles or so
+There can some ways in which the noise in the TTC estimate can be reduced and a higher accuracy can
+be achieved:
+ We can fuse the LI DAR data with radar sensor data which directly gives us range estimates
+ Additional data such as the orientation of the vehicle as it passes over a bump/pothole can be
+included in the calculations (The inertial measurement unit IMU sensor can be used for th is)
+ We can fuse LIDAR data with camera images and kalman Filters for higher accuracy
 
