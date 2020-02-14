@@ -15,3 +15,4 @@ To compute the TTC, we need to make assumptions on the physical behavior of the 
 
 <img src="media/formulae.jpg" width="779" height="414" />
 
+Once the relative velocity v0 is known, the time to collision can easily be computed by dividing the remaining distance between both vehicles by v0. So given a Lidar sensor which is able to take precise distance measurements, a system for TTC estimation can be developed based based on a CVM and on the set of equations shown above. Note however that a radar sensor would be the superior solution for TTC computation as it can directly measure the relative speed, whereas with the Lidar sensor we need to compute v0 from two (noisy) distance measurements.
