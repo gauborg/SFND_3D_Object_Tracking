@@ -27,6 +27,16 @@ In this project, we will implement the missing parts in the schematic. To do thi
   * Linux: gcc / g++ is installed by default on most Linux distros
   * Mac: same deal as make - [install Xcode command line tools](https://developer.apple.com/xcode/features/)
   * Windows: recommend using [MinGW](http://www.mingw.org/)
+  
+### Special Instructions for Plotting
+
+I have used Matplotlib library to create matlab like plots in this code. If you want to use the library,
+you have to add following lines to CMakeLists.txt file.
+
+find_package(PythonLibs 2.7)
+link_directories(${PYTHON_LIBRARY_DIRS})
+add_definitions(${PYTHON_DEFINITIONS})
+include_directories(${PYTHON_INCLUDE_DIRS})
 
 ## Basic Build Instructions
 
