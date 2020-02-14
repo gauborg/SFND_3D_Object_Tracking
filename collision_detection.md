@@ -10,7 +10,7 @@ In this traffic scenario, the green vehicle starts to reduce its speed at time t
 
 Before we can do this however, we need to find a way to describe the relative motion of the vehicles with a mathematical model.
 
-Constant velocity vs. constant acceleration
+## Constant velocity vs. constant acceleration
 To compute the TTC, we need to make assumptions on the physical behavior of the preceding vehicle. One assumption could be that the relative velocity between the yellow and green vehicle in the above figure were constant. This would lead to the so-called constant velocity model (CVM) which is represented by eq. 1 in the following diagram.
 
 <img src="media/formulae.jpg" width="779" height="414" />
