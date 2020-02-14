@@ -69,5 +69,8 @@ Compute the time-to-collision in second for all matched 3D objects using only ke
 ## Performance Evaluation 1
 Here we find examples where the TTC estimate of the Lidar sensor does not seem plausible and offer an explanation as to why this may happen.
 
+### Observations for implausible values
 
-
+1. We observed a few cases where the LIDAR TTC estimate is erroneous or does not make practical sense. We ran the code for TTC estimate for 60 frames with stepwidth of 2. Here is the table showing the values we have for SHITOMASI + BRISK detector descriptor combination run with MAT_BF and SEL_KNN matching.
+We start noticing that around frame 25 (image frame = 25*2 = 50), the values of LIDAR TTC estimate seem very erroneous. It took me some time to understand why this was happening, but on closer look at the images, it looks like both the preceding vehicle and our ego vehicle are stopped. Hence, d0 and d1 become the same. Hence, the TTC goes to infinity. We also notice a value around frame 18, which
+may be because of some noise.
