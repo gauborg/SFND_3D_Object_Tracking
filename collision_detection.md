@@ -1,5 +1,4 @@
 # Collision Detection Problem
-
 A collision avoidance system (CAS) is an active safety feature that warns drivers or even triggers the brake in the event of an imminent collision with an object in the path of driving. If a preceding vehicle is present, the CAS continuously estimates the time to collision (TTC). When the TTC falls below a lower threshold, the CAS can t hen decide to either warn the driver of the imminent danger or depending on the system apply the vehicle brakes autonomously. For the engineering task you will be completing in this course this means that you will need to find a way to compute the TTC to the vehicle in front.
 
 <img src="media/basics_collision_detection.jpg" width="850" height="414" />
@@ -38,3 +37,23 @@ In order to compute the TTC, we need to find the distance to the closest Lidar p
 <img src="media/lidarpoints.jpg" width="850" height="450" />
 
 Even though Lidar is a reliable sensor, erroneous measurements may still occur. As seen in the figure above, a small number of points is located behind the tailgate, seemingly without connection to the vehicle. When searching for the closest points, such measurements will pose a problem as the estimated distance will be too small. There are ways to avoid such errors by post-processing the point cloud, but there will be no guarantee that such problems will never occur in practice. It is thus a good idea to perform a more robust computation which is able to cope with a certain number of outliers.
+
+# TTC estimate using Camera
+### Measuring TTC without distance
+
+Monocular cameras are not able to measure metric distances. They are passive sensors that rely on the ambient light which reflects off of objects into the camera lens. It is thus not possible to measure the runtime of light as with Lidar technology.
+
+To measure distance, a second camera would be needed. Given two images taken by two carefully aligned cameras (also called a stereo setup) at the same time instant, one would have to locate common points of interest in both images (e.g. the tail lights of the preceding vehicle) and then triangulate their distance using camera geometry and perspective projection.
+
+Let us consider the constant velocity motion model we introduced in a previous section of this course and think about a way to replace the metric distances d with something the camera can measure reliably, such as pixel distances directly on the image plane. In the following figure, you can see how the height HH of the preceding vehicle can be mapped onto the image place using perspective projection. We can see that the same height HH maps to different heights h0 and h1 in the image plane, depending on the distance d0 and d1 of the vehicle. It is obvious that there is a geometric relation between hh, HH, dd and the focal length ff of the pinhole camera - and this is what we want to exploit in the following.
+
+<img src="media/ttc_camera.jpg" width="850" height="450" />
+
+Let us take a look at the following set of equations:
+
+<img src="media/ttc_camera3.jpg" width="850" height="450" />
+
+In (1) we use the focal length of the camera and a distance measurement d0 performed at time t0 to project the height HH of the vehicle onto the image plane and thus to a height h in pixels. The same is done at time t1, leading to a projected height h1.
+In (2), we compute the ratio of the relative heights h0 and h1. As both HH and ff are cancelled out, we can observe a direct relation between relative height hh and absolute metric distance dd. We can thus express the distance to the vehicle d0 as the product of d1 and the ratio of relative heights on the image plane.
+In (3), we substitute d0 in the equation for constant velocity and solve for d1, which is now dependent on the constant relative velocity v0, on the time between measuring d0 and d1 and on the ratio of relative heights on the image plane.
+In (4), the TTC is computed as the ratio of remaining distance to impact, which is d1, and the constant velocity v0. As we can easily see, the TTC now only consists of \Delta tΔt, h0 and h1. Thus, it is possible to measure the time to collision by observing relative height change on the image sensor. Distance measurements are not needed and we can thus use a mono camera to estimate the time-to-collision by observing changes in relative height (also called scale change) directly in the image.
