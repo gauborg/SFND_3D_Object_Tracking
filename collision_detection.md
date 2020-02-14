@@ -16,3 +16,18 @@ To compute the TTC, we need to make assumptions on the physical behavior of the 
 <img src="media/formulae.jpg" width="779" height="414" />
 
 Once the relative velocity v0 is known, the time to collision can easily be computed by dividing the remaining distance between both vehicles by v0. So given a Lidar sensor which is able to take precise distance measurements, a system for TTC estimation can be developed based based on a CVM and on the set of equations shown above. Note however that a radar sensor would be the superior solution for TTC computation as it can directly measure the relative speed, whereas with the Lidar sensor we need to compute v0 from two (noisy) distance measurements.
+
+### Preparing the Lidar Point Cloud
+The following image shows a Lidar point cloud as an overlay over a camera image taken in a highway scenario with a preceding vehicle directly in the path of driving. Distance to the sensor is color-coded (green is far away, red is close). On the left side, a bird-view perspective of the Lidar points is shown as well.
+
+<img src="media/lidar_cloud.jpg" width="850" height="414" />
+
+As can easily be seen, the Lidar sensor provides measurements on the vehicles as well as on the road surface. Also, some 3D points in the camera image do not seem accurate when compared to their surrounding neighbors. Especially the points near the roof of the preceding vehicle differ in color from the points on the tailgate.
+
+As measurement accuracy is correlated to the amount of light reflected from an object, it makes sense to consider the reflectiveness r of each Lidar point which we can access in addition to the x, y and z coordinates. An analysis of the associated reflectivity of the point cloud shows that such deviations often occur in regions with reduced reflectiveness.
+In order to derive a stable TTC measurement from the given point cloud, two main steps have to be performed:
+1. Remove measurements on the road surface
+2. Remove measurements with low reflectivity
+
+In the figure below, Lidar points are shown in a top-view perspective and as an image overlay after applying the filtering. After removing Lidar points in this manner, it is now much easier to derive the distance d(t) to the preceding vehicle.
+<img src="media/lidar_cloud2.jpg" width="850" height="414" />
