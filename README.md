@@ -2,7 +2,7 @@
 
 This project assumes you have a solid understanding of keypoint detectors, descriptors, and methods to match them between successive images. Also, you know how to detect objects in an image using the YOLO deep-learning framework. And finally, you know how to associate regions in a camera image with Lidar points in 3D space. Let's take a look at our program schematic to see what we already have accomplished and what's still missing.
 
-For some theory on collision detection, check out [this documentation.](collision_detection.md)
+For some theory on collision detection for autonomous vehicles, check out [this documentation.](collision_detection.md)
 
 <img src="images/course_code_structure.png" width="779" height="414" />
 
@@ -81,39 +81,39 @@ may be because of some noise.
 | :---: | :-------: | :-------: |
 |1|  12.79	 | 13.25 |
 |2|  15.74  | 19.57 |
-|3|	 13.18	 | 17.9
-|4|	 13.89	 | 21.89
-|5|	 12.34	 | 11.91
-|6|	 11.91	 | 10.97
-|7|	 9.55	  | 10.93
-|8|	 8.75	  | 13.34
-|9|	 9.63	  | 9.23
-|10|	7.83	  | 9.43
-|11|	7.35	  | 7.86
-|12|	8.17	  | 8.56
-|13|	7.21	  | 8.21
-|14|	9.33	  | 9.50
-|15|	16.65  | 9.35
-|16|	11.87  | 9.92
-|17|	9.95	  | 9.96
-|18|	-83.13 |	8.8 
-|19|	18.00	 | 7.98
-|20|	13.05	 | 7.33
-|21|	9.52	  | 6.71
-|22|	10.32	 | 12.65
-|23|	5.18	  | 8.18
-|24|	12.48	 | 9.75
-|25|	-4.25	 | 13.54
-|26|	13.02	 |-10.76
-|27|	-18.14	| 23.32
-|28|	 23.74	| 10.64
-|29|	-98.99	|-inf
-|30|	-378.56|-8.65
-|31|	10.32	 |-inf
-|32|	473.97	|-6.37
-|33|	-313.89|-inf
-|34|	-30622.7|	-8.83
-|35|	53.40	|-inf
+|3|	 13.18	 | 17.9  |
+|4|	 13.89	 | 21.89 |
+|5|	 12.34	 | 11.91 |
+|6|	 11.91	 | 10.97 |
+|7|	 9.55	  | 10.93 |
+|8|	 8.75	  | 13.34 |
+|9|	 9.63	  | 9.23  |
+|10|	7.83	  | 9.43  |
+|11|	7.35	  | 7.86  |
+|12|	8.17	  | 8.56  |
+|13|	7.21	  | 8.21  |
+|14|	9.33	  | 9.50  |
+|15|	16.65  | 9.35  |
+|16|	11.87  | 9.92  |
+|17|	9.95	  | 9.96  |
+|18|	-83.13 |	8.8   |
+|19|	18.00	 | 7.98  |
+|20|	13.05	 | 7.33  |
+|21|	9.52	  | 6.71  |
+|22|	10.32	 | 12.65 |
+|23|	5.18	  | 8.18  |
+|24|	12.48	 | 9.75  |
+|25|	-4.25	 | 13.54 |
+|26|	13.02	 |-10.76 |
+|27|	-18.14	| 23.32 |
+|28|	 23.74	| 10.64 |
+|29|	-98.99	|-inf   |
+|30|	-378.56|-8.65  |
+|31|	10.32	 |-inf   |
+|32|	473.97	|-6.37  |
+|33|	-313.89|-inf   |
+|34|	-30622.7|	-8.83|
+|35|	53.40	|-inf    |
 
 
 
