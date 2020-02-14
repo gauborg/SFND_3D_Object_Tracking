@@ -57,3 +57,8 @@ In (1) we use the focal length of the camera and a distance measurement d0 perfo
 In (2), we compute the ratio of the relative heights h0 and h1. As both HH and ff are cancelled out, we can observe a direct relation between relative height hh and absolute metric distance dd. We can thus express the distance to the vehicle d0 as the product of d1 and the ratio of relative heights on the image plane.
 In (3), we substitute d0 in the equation for constant velocity and solve for d1, which is now dependent on the constant relative velocity v0, on the time between measuring d0 and d1 and on the ratio of relative heights on the image plane.
 In (4), the TTC is computed as the ratio of remaining distance to impact, which is d1, and the constant velocity v0. As we can easily see, the TTC now only consists of \Delta tΔt, h0 and h1. Thus, it is possible to measure the time to collision by observing relative height change on the image sensor. Distance measurements are not needed and we can thus use a mono camera to estimate the time-to-collision by observing changes in relative height (also called scale change) directly in the image.
+
+### Using Texture Keypoints Instead
+Instead of relying on the detection of the vehicle as a whole we now want to analyze its structure on a smaller scale. If if were possible to locate uniquely identifiable keypoints that could be tracked from one frame to the next, we could use the distance between all keypoints on the vehicle relative to each other to compute a robust estimate of the height ratio in out TTC equation. The following figure illustrates the concept.
+
+<img src="media/keypoints_distance.jpg" width="850" height="450" />
