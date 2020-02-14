@@ -74,3 +74,47 @@ Here we find examples where the TTC estimate of the Lidar sensor does not seem p
 1. We observed a few cases where the LIDAR TTC estimate is erroneous or does not make practical sense. We ran the code for TTC estimate for 60 frames with stepwidth of 2. Here is the table showing the values we have for SHITOMASI + BRISK detector descriptor combination run with MAT_BF and SEL_KNN matching.
 We start noticing that around frame 25 (image frame = 25*2 = 50), the values of LIDAR TTC estimate seem very erroneous. It took me some time to understand why this was happening, but on closer look at the images, it looks like both the preceding vehicle and our ego vehicle are stopped. Hence, d0 and d1 become the same. Hence, the TTC goes to infinity. We also notice a value around frame 18, which
 may be because of some noise.
+
+#### SHITOMASI + BRISK
+
+| Frame | TTC Lidar(seconds) | TTC Camera (seconds) |
+| :---: | :-------: | :-------: |
+|1|  12.79	 | 13.25 |
+|2|  15.74  | 19.57 |
+|3|	 13.18	 | 17.9
+|4|	 13.89	 | 21.89
+|5|	 12.34	 | 11.91
+|6|	 11.91	 | 10.97
+|7|	 9.55	  | 10.93
+|8|	 8.75	  | 13.34
+|9|	 9.63	  | 9.23
+|10|	7.83	  | 9.43
+|11|	7.35	  | 7.86
+|12|	8.17	  | 8.56
+|13|	7.21	  | 8.21
+|14|	9.33	  | 9.50
+|15|	16.65  | 9.35
+|16|	11.87  | 9.92
+|17|	9.95	  | 9.96
+|18|	-83.13 |	8.8 
+|19|	18.00	 | 7.98
+|20|	13.05	 | 7.33
+|21|	9.52	  | 6.71
+|22|	10.32	 | 12.65
+|23|	5.18	  | 8.18
+|24|	12.48	 | 9.75
+|25|	-4.25	 | 13.54
+|26|	13.02	 |-10.76
+|27|	-18.14	| 23.32
+|28|	 23.74	| 10.64
+|29|	-98.99	|-inf
+|30|	-378.56|-8.65
+|31|	10.32	 |-inf
+|32|	473.97	|-6.37
+|33|	-313.89|-inf
+|34|	-30622.7|	-8.83
+|35|	53.40	|-inf
+
+
+
+
