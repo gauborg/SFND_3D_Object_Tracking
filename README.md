@@ -77,7 +77,7 @@ may be because of some noise.
 
 #### SHITOMASI + BRISK
 
-| Frame | TTC Lidar(seconds) | TTC Camera (seconds) |
+| **Frame** | **TTC Lidar (seconds)** | **TTC Camera (seconds)** |
 | :---: | :-------: | :-------: |
 |1|  12.79	 | 13.25 |
 |2|  15.74  | 19.57 |
