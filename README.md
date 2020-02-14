@@ -118,14 +118,14 @@ We start noticing that around frame 25 (image frame = 25*2 = 50), the values of 
 2. I ran the tests again, this time with MAT_FLANN matcher and only on the first 30 frames with
 stepwidth of 1. We see that the LIDAR TTC estimate is not consistent and seems to increase somewhat between few frames which suggests that there is still so me noise in the measurements. This noise maybe due to some erroneous measurements, the reasons for which could be any of the following -
 
- uneven road surface with bumps/potholes
- improper calibration or mounting of LIDAR sensors
- maybe the LIDAR and camera are not perfectly synced together
- some reflections of LIDAR from unwanted objects like road/dust particles
+- uneven road surface with bumps/potholes
+- improper calibration or mounting of LIDAR sensors
+- maybe the LIDAR and camera are not perfectly synced together
+- some reflections of LIDAR from unwanted objects like road/dust particles
 
 There can some ways in which the noise in the TTC estimate can be reduced and a higher accuracy can
 be achieved -
- We can fuse the LI DAR data with radar sensor data which directly gives us range estimates
- Additional data such as the orientation of the vehicle as it passes over a bump/pothole can be included in the calculations (The inertial measurement unit IMU sensor can be used for this purpose)
- We can fuse LIDAR data with camera images and kalman Filters for higher accuracy
+- We can fuse the LI DAR data with radar sensor data which directly gives us range estimates
+- Additional data such as the orientation of the vehicle as it passes over a bump/pothole can be included in the calculations. (The inertial measurement unit IMU sensor can be used for this purpose).
+- We can fuse LIDAR data with camera images and kalman Filters for higher accuracy
 
