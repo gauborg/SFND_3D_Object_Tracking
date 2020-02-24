@@ -94,7 +94,7 @@ Here we find examples where the TTC estimate of the Lidar sensor does not seem p
 |15|	16.65  | 9.35  |
 |16|	11.87  | 9.92  |
 |17|	9.95	  | 9.96  |
-|18|	**-83.13** |	8.8   |
+|18|	**-83.13** |	8.8|
 |19|	18.00	 | 7.98  |
 |20|	13.05	 | 7.33  |
 |21|	9.52	  | 6.71  |
@@ -105,11 +105,11 @@ Here we find examples where the TTC estimate of the Lidar sensor does not seem p
 |26|	13.02	 |**-10.76** |
 |27|	**-18.14**	| 23.32 |
 |28|	 23.74	| 10.64 |
-|29|	**-98.99**	|**-inf**   |
+|29|	**-98.99**	|**-inf**|
 |30|	**-378.56**|-8.65  |
 |31|	10.32	 |**-inf**   |
 |32|	**473.97**	|-6.37  |
-|33|	**-313.89**|**-inf**   |
+|33|	**-313.89**|**-inf** |
 |34|	**-30622.7**|	-8.83|
 |35|	53.40	|**-inf**    |
 
@@ -125,7 +125,7 @@ stepwidth of 1. We see that the LIDAR TTC estimate is not consistent and seems t
 
 There can some ways in which the noise in the TTC estimate can be reduced and a higher accuracy can
 be achieved -
-- We can fuse the LI DAR data with radar sensor data which directly gives us range estimates
+- We can fuse the LIDAR data with radar sensor data which directly gives us range estimates
 - Additional data such as the orientation of the vehicle as it passes over a bump/pothole can be included in the calculations. (The inertial measurement unit IMU sensor can be used for this purpose).
 - We can fuse LIDAR data with camera images and kalman Filters for higher accuracy
 
