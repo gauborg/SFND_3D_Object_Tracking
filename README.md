@@ -1,6 +1,6 @@
 # SFND 3D Object Tracking
 
-This project assumes you have a solid understanding of keypoint detectors, descriptors, and methods to match them between successive images. Also, you know how to detect objects in an image using the YOLO deep-learning framework. And finally, you know how to associate regions in a camera image with Lidar points in 3D space. Let's take a look at our program schematic to see what we already have accomplished and what's still missing.
+This project assumes you have a solid understanding of keypoint detectors, descriptors, and methods to match them between successive images. Also, you know how to detect objects in an image using the YOLO deep-learning framework. And finally, you know how to associate regions in a camera image with Lidar points in 3D space. Let's take a look at our program schematic to see what we already have accomplished and what's still missing. If you do not have much backgroung with any of this, you can refer to my work on keypoint detectors/descriptor performance evaluation [here](https://github.com/gauborg/SFND_2D_Feature_Tracking). 
 
 For some theory on collision detection for autonomous vehicles, check out this [documentation.](./collision_detection_theory.md)
 
