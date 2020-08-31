@@ -1,6 +1,6 @@
 # SFND 3D Object Tracking
 
-This project assumes you have a solid understanding of keypoint detectors, descriptors, and methods to match them between successive images. Also, you know how to detect objects in an image using the YOLO deep-learning framework. And finally, you know how to associate regions in a camera image with Lidar points in 3D space. Let's take a look at our program schematic to see what we already have accomplished and what's still missing. If you do not have much backgroung with any of this, you can refer to my work on keypoint detectors/descriptor performance evaluation [here](https://github.com/gauborg/SFND_2D_Feature_Tracking). 
+This project assumes you have a solid understanding of keypoint detectors, descriptors, and methods to match them between successive images. Also, you know how to detect objects in an image using the YOLO deep-learning framework. And finally, you know how to associate regions in a camera image with Lidar points in 3D space. Let's take a look at our program schematic to see what we already have accomplished and what's still missing. If you do not have any background with any of this, you can refer to my work on keypoint detectors/descriptor performance evaluation [here](https://github.com/gauborg/SFND_2D_Feature_Tracking). 
 
 For some theory on collision detection for autonomous vehicles, check out this [documentation.](./collision_detection_theory.md)
 
@@ -35,10 +35,12 @@ In this project, we will implement the missing parts in the schematic. To do thi
 I have used Matplotlib library to create matlab like plots in this code. If you want to use the library,
 you have to add following lines to CMakeLists.txt file.
 
+```Cmake
 find_package(PythonLibs 2.7)
 link_directories(${PYTHON_LIBRARY_DIRS})
 add_definitions(${PYTHON_DEFINITIONS})
 include_directories(${PYTHON_INCLUDE_DIRS})
+```
 
 ## Basic Build Instructions
 
